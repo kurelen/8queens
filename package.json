@@ -4,14 +4,17 @@
     "description": "Find all solutions to the 8 queen problem",
     "main": "8queens.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "format": "prettier --write \"**/*.{js,json,md,mjs}|run\"",
         "format:check": "prettier --check \"**/*.{js,json,md,mjs}|run\"",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix"
     },
-    "author": "",
-    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/kurelen/8queens.git"
+    },
+    "author": "Alexander Jandt",
+    "license": "Unlicense",
     "devDependencies": {
         "eslint": "^9.39.2",
         "eslint-config-prettier": "^10.1.8",
