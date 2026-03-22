@@ -1,49 +1,61 @@
-function position_to_column_string(position) {
+function render_row(position, board_size = 8) {
     let s = "|";
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < board_size; i++) {
         s += i === position ? "Q|" : "_|";
     }
     return s + "\n";
 }
 
-function board_to_string(board) {
-    let s = "_________________\n";
-    for (let i = 0; i < 8; i++) {
-        s += position_to_column_string(board[i]);
+function board_to_string(board, board_size = 8) {
+    const border = board_size * 2 + 1;
+    let s = "";
+    for (let i = 0; i < border; i++) {
+        s += "_";
     }
-    return s + "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n";
+    s += "\n";
+    for (let i = 0; i < board_size; i++) {
+        s += render_row(board[i], board_size);
+    }
+    for (let i = 0; i < border; i++) {
+        s += "‾";
+    }
+    return s + "\n";
 }
 
 function is_valid(board) {
-    for (let i = 0; i < board.length; i++) {
-        for (let j = i + 1; j < board.length; j++) {
-            if (board[i] === board[j]) {
-                return false;
-            }
-            const dcol = j - i;
-            const drow = Math.abs(board[i] - board[j]);
-            if (dcol === drow) {
-                return false;
-            }
+    // Only check if the last added element would cause trouble
+    const last_index = board.length - 1;
+    if (last_index < 1) {
+        return true;
+    }
+    const last_value = board[last_index];
+    for (let i = 0; i < last_index; i++) {
+        if (board[i] == last_value) {
+            return false;
+        }
+        const drow = last_index - i;
+        const dcol = Math.abs(last_value - board[i]);
+        if (dcol === drow) {
+            return false;
         }
     }
     return true;
 }
 
-function find_all_solutions() {
+function find_all_solutions(board_size = 8) {
     const solutions = [];
     const board = [-1];
 
     while (board.length !== 0) {
         let position = board.pop() + 1;
-        if (position > 7) {
+        if (position >= board_size) {
             continue;
         }
         board.push(position);
         if (!is_valid(board)) {
             continue;
         }
-        if (board.length === 8) {
+        if (board.length === board_size) {
             solutions.push(board.slice());
             continue;
         }
