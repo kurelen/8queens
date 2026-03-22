@@ -19,5 +19,5 @@ function list_solution_size(to = 15) {
     }
 }
 
-list_solution_size(20);
-// list_all_solutions(6);
+list_solution_size();
+list_all_solutions(6);
