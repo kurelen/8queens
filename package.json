@@ -5,8 +5,8 @@
     "main": "8queens.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "format": "prettier --write \"**/*.{js,json,md,mjs}\"",
-        "format:check": "prettier --check \"**/*.{js,json,md,mjs}\"",
+        "format": "prettier --write \"**/*.{js,json,md,mjs}|run\"",
+        "format:check": "prettier --check \"**/*.{js,json,md,mjs}|run\"",
         "lint": "eslint .",
         "lint:fix": "eslint . --fix"
     },

@@ -1,12 +1,23 @@
 #!/usr/bin/env node
 
 const eight_queens = require("./src/8queens.js");
-const board_size = 5;
 
-const solutions = eight_queens.find_all_solutions(board_size);
+function list_all_solutions(board_size = 8) {
+    const solutions = eight_queens.find_all_solutions(board_size);
 
-solutions
-    .map(board => eight_queens.board_to_string(board, board_size))
-    .forEach(s => console.log(s));
+    solutions
+        .map((board) => eight_queens.board_to_string(board, board_size))
+        .forEach((s) => console.log(s));
 
-console.log(`Found ${solutions.length} solutions`);
+    console.log(`Found ${solutions.length} solutions`);
+}
+
+function list_solution_size(to = 15) {
+    for (let board_size = 1; board_size < to; board_size++) {
+        const count = eight_queens.count_solutions(board_size);
+        console.log(`${board_size}: ${count} solutions`);
+    }
+}
+
+list_solution_size(20);
+// list_all_solutions(6);

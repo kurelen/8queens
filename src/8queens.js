@@ -30,7 +30,7 @@ function is_valid(board) {
     }
     const last_value = board[last_index];
     for (let i = 0; i < last_index; i++) {
-        if (board[i] == last_value) {
+        if (board[i] === last_value) {
             return false;
         }
         const drow = last_index - i;
@@ -47,7 +47,7 @@ function find_all_solutions(board_size = 8) {
     const board = [-1];
 
     while (board.length !== 0) {
-        let position = board.pop() + 1;
+        const position = board.pop() + 1;
         if (position >= board_size) {
             continue;
         }
@@ -65,7 +65,36 @@ function find_all_solutions(board_size = 8) {
     return solutions;
 }
 
+function count_solutions(board_size = 8) {
+    if (board_size > 30) {
+        return -1;
+    }
+    const all = (1 << board_size) - 1;
+
+    function solve(cols, diag_left, diag_right) {
+        if (cols === all) {
+            return 1;
+        }
+        let count = 0;
+        let available = all & ~(cols | diag_left | diag_right);
+        while (available) {
+            const bit = available & -available;
+
+            available -= bit;
+            count += solve(
+                cols | bit,
+                (diag_left | bit) << 1,
+                (diag_right | bit) >> 1
+            );
+        }
+        return count;
+    }
+
+    return solve(0, 0, 0);
+}
+
 module.exports = {
     board_to_string,
     find_all_solutions,
+    count_solutions,
 };
