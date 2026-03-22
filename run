@@ -1,3 +1,5 @@
 #!/usr/bin/env node
 
-console.log("Hello world");
+const solver = require("./src/8queens.js");
+
+solver.say_hello();
