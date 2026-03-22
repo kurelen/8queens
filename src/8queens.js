@@ -1,4 +1,4 @@
-function column_string(position) {
+function position_to_column_string(position) {
     let s = "|";
     for (let i = 0; i < 8; i++) {
         s += i === position ? "Q|" : "_|";
@@ -6,10 +6,10 @@ function column_string(position) {
     return s + "\n";
 }
 
-function board_string(board) {
+function board_to_string(board) {
     let s = "_________________\n";
     for (let i = 0; i < 8; i++) {
-        s += column_string(board[i]);
+        s += position_to_column_string(board[i]);
     }
     return s + "‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾\n";
 }
@@ -27,16 +27,33 @@ function is_valid(board) {
             }
         }
     }
-
     return true;
 }
 
 function find_all_solutions() {
-    return [];
+    const solutions = [];
+    const board = [-1];
+
+    while (board.length !== 0) {
+        let position = board.pop() + 1;
+        if (position > 7) {
+            continue;
+        }
+        board.push(position);
+        if (!is_valid(board)) {
+            continue;
+        }
+        if (board.length === 8) {
+            solutions.push(board.slice());
+            continue;
+        }
+        board.push(-1);
+    }
+
+    return solutions;
 }
 
 module.exports = {
-    board_string,
-    is_valid,
+    board_to_string,
     find_all_solutions,
 };
